@@ -1,0 +1,210 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "academic-research-platform"
+version = "1.0.0"
+description = "Comprehensive platform for systematic review validation, meta-analysis research, and molecular biophysical chemistry simulation"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "David Joshua Ferguson", email = ""},
+]
+maintainers = [
+    {name = "David Joshua Ferguson", email = ""},
+]
+keywords = [
+    "research",
+    "meta-analysis", 
+    "systematic-review",
+    "molecular-docking",
+    "pharmacology",
+    "bioinformatics",
+    "drug-discovery",
+    "teratrend-analysis",
+    "literature-review"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Framework :: Streamlit",
+]
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit>=1.28.0",
+    "plotly>=5.15.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "scikit-learn>=1.3.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "biopython>=1.81",
+    "rdkit>=2023.3.1",
+    "py3dmol>=2.0.0",
+    "mdanalysis>=2.4.0",
+    "nltk>=3.8.1",
+    "spacy>=3.6.0",
+    "textstat>=0.7.3",
+    "pypdf2>=3.0.1",
+    "pdfplumber>=0.9.0",
+    "python-docx>=0.8.11",
+    "openpyxl>=3.1.0",
+    "xlrd>=2.0.1",
+    "networkx>=3.1",
+    "sympy>=1.12",
+    "requests>=2.31.0",
+    "trafilatura>=1.6.0",
+    "ipywidgets>=8.0.0",
+    "jupyter>=1.0.0",
+    "notebook>=6.5.0",
+    "chembl-webresource-client>=0.10.6",
+    "python-dateutil>=2.8.2",
+    "pytz>=2023.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "pre-commit>=3.0.0",
+    "isort>=5.12.0",
+]
+docs = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=1.3.0",
+    "myst-parser>=2.0.0",
+    "sphinx-autodoc-typehints>=1.24.0",
+]
+testing = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0", 
+    "pytest-mock>=3.11.0",
+    "pytest-asyncio>=0.21.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/your-username/academic-research-platform"
+Documentation = "https://github.com/your-username/academic-research-platform/wiki"
+Repository = "https://github.com/your-username/academic-research-platform.git"
+"Bug Tracker" = "https://github.com/your-username/academic-research-platform/issues"
+Changelog = "https://github.com/your-username/academic-research-platform/blob/main/CHANGELOG.md"
+
+[project.scripts]
+academic-research-platform = "app:main"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["utils*", "pages*"]
+exclude = ["tests*", "docs*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.md", "*.txt", "*.yml", "*.yaml", "*.toml"]
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+known_first_party = ["utils", "pages"]
+known_third_party = ["streamlit", "plotly", "pandas", "numpy", "scipy"]
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "E501", "W503"]
+exclude = [".git", "__pycache__", "build", "dist", ".venv", ".eggs"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+    "rdkit.*",
+    "py3dmol.*",
+    "mdanalysis.*",
+    "biopython.*",
+    "chembl_webresource_client.*",
+    "trafilatura.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = ["tests"]
+filterwarnings = [
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+[tool.coverage.run]
+source = ["utils", "pages"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "setup.py",
+    "run_local.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\bProtocol\):",
+    "@(abc\.)?abstractmethod",
+]
